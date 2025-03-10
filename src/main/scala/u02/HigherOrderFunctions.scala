@@ -20,3 +20,29 @@ object HigherOrderFunctions extends App:
     f => (i => f(f(i))) // without parens: f => i => f(f(i))
 
   println(l(_ + 1)(10)) // 12, see currying next..
+
+  val positive: Int => String = _ match
+      case x if x >= 0 => "positive"
+      case x if x < 0 => "negative"
+
+  println(positive(-22))
+
+  def empty: String => Boolean = _ == ""
+
+  println(empty(""))
+
+  def neg(f: String => Boolean): String => Boolean = x => !f(x)
+
+  def genericNeg[A](f: A => Boolean): A => Boolean = x => !f(x)
+//  def negEmpty(x: String): Boolean = neg(empty(x))
+
+  def notEmpty = neg(empty)
+
+  def genericNotEmpty = genericNeg(empty)
+
+  println(empty(""))
+  println(empty("w"))
+  println(notEmpty(""))
+  println(notEmpty("w"))
+  println(genericNotEmpty(""))
+  println(genericNotEmpty("w"))
